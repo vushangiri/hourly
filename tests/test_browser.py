@@ -1,5 +1,5 @@
 """Opt-in real browser test against a disposable running Hourly deployment.
-Set BROWSER_TEST_URL=http://localhost:8080. Creates one test account/workplace.
+Set BROWSER_TEST_URL=http://localhost:8081. Creates one test account/workplace.
 Run after python -m playwright install chromium. Does not use mocked API data.
 """
 import os
@@ -27,7 +27,7 @@ def test_mobile_end_to_end():
         page.get_by_label('Phone with country code').fill('+614'+str(secrets.randbelow(100000000)).zfill(8))
         page.get_by_label('Timezone',exact=True).fill('Australia/Sydney')
         page.get_by_label('Email',exact=True).fill(email)
-        page.get_by_label('Password (12–128 characters)',exact=True).fill('browser-test-password-123')
+        page.get_by_label('Password (6–128 characters)',exact=True).fill('browser-test-password-123')
         page.locator('#submit').click()
         page.get_by_role('button',name='＋ Add workplace',exact=True).click()
         page.get_by_label('Workplace name',exact=True).fill('QA Workplace')

@@ -1,5 +1,5 @@
 // Cache only public assets and an account-free shell. Never cache API/auth responses.
-const VERSION='hourly-shell-v1';
+const VERSION='hourly-shell-v2';
 const ASSETS=['/offline','/static/app.css','/static/app.js','/static/icon-192.png','/static/icon-512.png','/static/manifest.webmanifest'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(VERSION).then(c=>c.addAll(ASSETS))));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('hourly-shell-')&&k!==VERSION).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

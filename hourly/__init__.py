@@ -19,7 +19,7 @@ def create_app(test_config=None):
         SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE='Lax',
         SESSION_COOKIE_SECURE=os.environ.get('COOKIE_SECURE', '1') == '1',
         PERMANENT_SESSION_LIFETIME=timedelta(days=14), MAX_CONTENT_LENGTH=32 * 1024,
-        PUBLIC_URL=os.environ.get('PUBLIC_URL', 'http://localhost:8080').rstrip('/'),
+        PUBLIC_URL=os.environ.get('PUBLIC_URL', 'http://localhost:8081').rstrip('/'),
     )
     if test_config:
         app.config.update(test_config)

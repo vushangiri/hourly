@@ -43,8 +43,8 @@ def register(app):
     def seed_demo():
         """Create a demo account only with an operator-supplied password."""
         secret = os.environ.get('DEMO_PASSWORD', '')
-        if len(secret) < 12:
-            raise click.ClickException('Set DEMO_PASSWORD (at least 12 characters).')
+        if len(secret) < 6:
+            raise click.ClickException('Set DEMO_PASSWORD (at least 6 characters).')
         with app.extensions['db_factory'].begin() as db:
             if db.scalar(select(User.id).where(User.email == 'demo@example.com')):
                 raise click.ClickException('Demo account already exists.')

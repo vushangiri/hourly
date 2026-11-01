@@ -37,8 +37,8 @@ def identity(data):
 
 
 def password(value):
-    if not isinstance(value, str) or not 12 <= len(value) <= 128:
-        raise Invalid('Password must contain 12–128 characters.')
+    if not isinstance(value, str) or not 6 <= len(value) <= 128:
+        raise Invalid('Password must contain 6–128 characters.')
     return generate_password_hash(value)
 
 

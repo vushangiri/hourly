@@ -13,7 +13,7 @@ Copy-Item .env.example .env
 python -c "import secrets; print(secrets.token_hex(32))"
 ```
 
-Edit `.env`. Put the generated value in `SECRET_KEY`; generate another hex value for `POSTGRES_PASSWORD`. Keep `COOKIE_SECURE=0` and `PUBLIC_URL=http://localhost:8080` for local use. Do not use the placeholder values.
+Edit `.env`. Put the generated value in `SECRET_KEY`; generate another hex value for `POSTGRES_PASSWORD`. Keep `COOKIE_SECURE=0` and `PUBLIC_URL=http://localhost:8081` for local use. Do not use the placeholder values.
 
 ```powershell
 docker compose build
@@ -23,7 +23,7 @@ docker compose up -d web scheduler nginx
 docker compose logs --tail=50 web scheduler
 ```
 
-Open **http://localhost:8080** and register an account. The database is persistent in the `pgdata` named volume. The application starts empty; creating an automatic workplace starts scheduling from its creation date, not from invented past shifts.
+Open **http://localhost:8081** and register an account. Host port `8081` lets this stack run alongside another app using `8080` (or `80`/`443`). Flask, Nginx and PostgreSQL keep their internal container ports because separate Compose projects have isolated networks. The database is persistent in the `pgdata` named volume. The application starts empty; creating an automatic workplace starts scheduling from its creation date, not from invented past shifts.
 
 Run one scheduler pass manually:
 
@@ -58,7 +58,7 @@ python3 -c 'import secrets; print(secrets.token_hex(32))'
 chmod 600 .env
 ```
 
-Set independent secrets, `COOKIE_SECURE=1`, and `PUBLIC_URL=https://hourly.your-domain.com`. Configure SMTP if password recovery is required. The default Compose proxy binds **127.0.0.1:8080 only**; do not expose PostgreSQL or Gunicorn publicly.
+Set independent secrets, `COOKIE_SECURE=1`, and `PUBLIC_URL=https://hourly.your-domain.com`. Configure SMTP if password recovery is required. The default Compose proxy publishes port **8081** on all host interfaces. For this host Nginx HTTPS setup, change the Compose port mapping to `127.0.0.1:8081:80`; do not expose PostgreSQL or Gunicorn publicly.
 
 ```bash
 docker compose build
@@ -129,7 +129,7 @@ Real browser/PWA test, against a running disposable deployment:
 
 ```bash
 python -m playwright install chromium
-export BROWSER_TEST_URL=http://localhost:8080
+export BROWSER_TEST_URL=http://localhost:8081
 python -m pytest tests/test_browser.py -q
 ```
 
@@ -137,7 +137,7 @@ PowerShell:
 
 ```powershell
 python -m playwright install chromium
-$env:BROWSER_TEST_URL = 'http://localhost:8080'
+$env:BROWSER_TEST_URL = 'http://localhost:8081'
 python -m pytest tests/test_browser.py -q
 ```
 
