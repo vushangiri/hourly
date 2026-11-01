@@ -1,0 +1,24 @@
+{
+  "scope": "local pure-domain call bundle; not DB/HTTP/mobile latency",
+  "samples": 1000,
+  "median_microseconds": 9.59,
+  "p95_microseconds": 10.99,
+  "assets": {
+    "app.js": {
+      "bytes": 28650,
+      "gzip_bytes": 9334
+    },
+    "app.css": {
+      "bytes": 8752,
+      "gzip_bytes": 2791
+    },
+    "auth.js": {
+      "bytes": 1931,
+      "gzip_bytes": 936
+    },
+    "sw.js": {
+      "bytes": 1018,
+      "gzip_bytes": 541
+    }
+  }
+}
